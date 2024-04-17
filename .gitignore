@@ -1,3 +1,7 @@
 flags/
 docs/
 *.swo
+*.swp
+proj/node_modules/
+proj/public/assets
+build/

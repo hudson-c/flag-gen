@@ -26,6 +26,7 @@ export class Flag {
 	nodes : Node[][]
 
 	constructor(size_x : number, size_y : number) {
+		this.nodes = []
 		for (let x = 0; x < size_x; x++) {
 			let column : Node[] = []
 			for (let y = 0; y < size_y; y++) {

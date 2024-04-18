@@ -1,10 +1,12 @@
+import * as scale_rules from './scale_rules'
+
 export class Node {
 	connections : Node[]
-	x : number
-	y : number
+	coords : [number, number]
 
-	constructor(x : number, y : number) {
+	constructor(coords : [number, number]) {
 		this.connections = []
+		this.coords = coords
 	}
 }
 
@@ -15,12 +17,34 @@ export class Graph {
 		this.nodes = nodes
 	}
 
+	to_shapes() : Shape[] {
+		return [new Shape([new Node([0,0])])]
+	}
+
 	johnsons() {} // TODO implement johnsons alg
 
 	private bellman_ford() {} // TODO implement bellman_ford alg
 
 	private remove_overlap(cyclics : Node[][]) {} // TODO remove graph overlaps. IE, kill parents if A -> B -> C -> A & B -> D -> C -> B exist but so does A -> B -> D -> C -> A, reject the latter and accept the former will need to do geometric overlap too - such as intercepts on lines
 }	
+
+export class Shape {
+	nodes : Node[]
+
+	constructor(nodes : Node[]) {
+		this.nodes = nodes
+	}
+
+  scale(canvas_size : [number, number], scaler : Function) : Shape {
+		return new Shape(this.nodes.map(
+			(n : Node)=> new Node(scaler(n.coords, canvas_size))
+		))
+	}
+
+	to_coordinates() : [number, number][] {
+	 return this.nodes.map((n : Node)=> n.coords)
+	}
+}
 
 export class Flag {
 	nodes : Node[][]
@@ -30,7 +54,7 @@ export class Flag {
 		for (let x = 0; x < size_x; x++) {
 			let column : Node[] = []
 			for (let y = 0; y < size_y; y++) {
-				column.push(new Node(x, y))	
+				column.push(new Node([x, y]))	
 			}
 			this.nodes.push(column)
 		}

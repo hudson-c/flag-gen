@@ -3,7 +3,7 @@ const build_path = `${base_path}/assets`
 const default_page = `${base_path}/home.html`
 
 await Bun.build({
-	entrypoints: ['./src/generator.ts', './src/structs.ts', './src/scale_rules.ts'],
+	entrypoints: ['./srcaltalt/generator.ts'],
 	outdir: build_path
 })
 
